@@ -82,7 +82,7 @@ extern NSString *const SMXMLDocumentErrorDomain;
 @property (nonatomic, retain) NSError *error;
 
 - (id)initWithData:(NSData *)data error:(NSError **)outError;
-
+- (id)initWithStream:(NSInputStream *)stream error:(NSError **)outError;
 + (SMXMLDocument *)documentWithData:(NSData *)data error:(NSError **)outError;
 
 @end

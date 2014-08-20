@@ -196,6 +196,32 @@ static NSError *SMXMLDocumentError(NSXMLParser *parser, NSError *parseError) {
 	return self;
 }
 
+- (id)initWithStream:(NSInputStream *)stream error:(NSError **)outError {
+        
+    self = [super init];
+	
+    if (self) {
+        
+        @autoreleasepool {
+            NSXMLParser *parser = [[NSXMLParser alloc] initWithStream:stream];
+            [parser setDelegate:self];
+            [parser setShouldProcessNamespaces:YES];
+            [parser setShouldReportNamespacePrefixes:YES];
+            [parser setShouldResolveExternalEntities:NO];
+            [parser parse];
+            
+            if (self.error) {
+                if (outError)
+                    *outError = self.error;
+                return nil;
+            } else if (outError) {
+                *outError = nil;
+            }
+        }
+	}
+	return self;
+}
+
 + (SMXMLDocument *)documentWithData:(NSData *)data error:(NSError **)outError {
 	return [[SMXMLDocument alloc] initWithData:data error:outError];
 }
